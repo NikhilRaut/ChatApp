@@ -17,6 +17,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -31,7 +35,6 @@ public class MainActivity extends Activity implements ResponseCollector {
 	private ArrayAdapter<Chat> adapter;
 	private String tag = "MainActivity";
 	private EditText message;
-	private SwipeRefreshLayout layout;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,6 +45,14 @@ public class MainActivity extends Activity implements ResponseCollector {
 		array =  new ArrayList<Chat>();
 		adapter =  new CustomListView(this, array);
 		list.setAdapter(adapter);
+		list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				hideKeyboard();
+			}
+		});
+		
 		if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(LOC_IS_API_ERROR, false)) {
 			getMessagesFromApi();
 		} else {
@@ -89,7 +100,14 @@ public class MainActivity extends Activity implements ResponseCollector {
 		}
 	}
 	
-	
+	private void hideKeyboard() {   
+	    // Check if no view has focus:
+	    View view = this.getCurrentFocus();
+	    if (view != null) {
+	        InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+	        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+	    }
+	}
 	
 
 
@@ -153,7 +171,7 @@ public class MainActivity extends Activity implements ResponseCollector {
 		} catch (JSONException e) {
 			//If failed 
 			PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean(LOC_IS_API_ERROR, true).commit();
-			// TODO Auto-generated catch block
+			Log.e(tag, e.toString());
 			e.printStackTrace();
 		}
 	}

@@ -120,7 +120,6 @@ public class CustomListView extends ArrayAdapter<Chat> {
             calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.getTimeInMillis()));
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
             Date currenTimeZone = (Date) calendar.getTime();
-            Date d1 = new Date();
             return sdf.format(currenTimeZone);
         }catch (Exception e) {
         }

@@ -15,7 +15,6 @@ public class JSONParser {
 		JSONArray array = object.getJSONArray(KEY_MESSAGES);
 		Chat chat;
 		
-//		for (int i = 0; i < array.length(); i++) {
 		for (int i = array.length() - 1; i > 0; i--) {
 		
 			chat =  new Chat();
@@ -26,8 +25,6 @@ public class JSONParser {
 			insertInToChatMessageDB(chat, context);
 			
 		}
-		
-		
 	}
 
 	private static void insertInToChatMessageDB(Chat chat, Context context) {

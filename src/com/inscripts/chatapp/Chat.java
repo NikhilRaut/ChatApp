@@ -5,12 +5,6 @@ public class Chat {
 	private String role;
 	private String timeStamp;
 
-	@Override
-	public String toString() {
-		return "Chat [message=" + message + ", role=" + role + ", timeStamp="
-				+ timeStamp + "]";
-	}
-
 	public String getMessage() {
 		return message;
 	}
@@ -33,6 +27,12 @@ public class Chat {
 
 	public void setTimeStamp(String timeStamp) {
 		this.timeStamp = timeStamp;
+	}
+
+	@Override
+	public String toString() {
+		return "Chat [message=" + message + ", role=" + role + ", timeStamp="
+				+ timeStamp + "]";
 	}
 
 }
